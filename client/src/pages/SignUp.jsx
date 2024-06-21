@@ -66,7 +66,7 @@ export default function SignUp() {
         <button
           disabled={loading}
           type="submit"
-          class="text-white font-bold disabled:opacity-80 bg-main-blue hover:bg-main-blue-dark focus:outline-none focus:ring-4 focus:ring-main-blue-light rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 uppercase"
+          class="text-white font-bold disabled:opacity-80 bg-main-bg hover:bg-main-bg-dark focus:outline-none focus:ring-4 focus:ring-main-bg-light rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 uppercase "
         >
           {loading ? "Loading..." : "Sign Up"}
         </button>

@@ -2,11 +2,11 @@ import { FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
 export default function Header() {
   return (
-    <header className="bg-f4d35e shadow-md">
+    <header className="bg-main-bg shadow-md">
       <div className="flex justify-between items-center max-w-7xl mx-auto p-3">
         <Link to="/">
           <h1 className="font-bold text-sm sm:text-xl flex flex-wrap">
-            <span className="text-main-blue">apartmnt</span>
+            <span className="text-f6f7eb">apartmnt</span>
           </h1>
         </Link>
 
@@ -20,18 +20,18 @@ export default function Header() {
         </form>
         <ul className="flex gap-4">
           <Link to="/">
-            <li className="hidden sm:inline text-0d3b66 hover:underline cursor-pointer">
+            <li className="hidden sm:inline text-f6f7eb hover:underline cursor-pointer">
               Home
             </li>
           </Link>
           <Link to="/about">
-            <li className="hidden sm:inline text-0d3b66 hover:underline cursor-pointer">
+            <li className="hidden sm:inline text-f6f7eb hover:underline cursor-pointer">
               About
             </li>
           </Link>
 
           <Link to="/signin">
-            <li className="hidden sm:inline text-0d3b66 hover:underline cursor-pointer">
+            <li className="hidden sm:inline text-f6f7eb hover:underline cursor-pointer">
               Sign In
             </li>
           </Link>
