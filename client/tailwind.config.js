@@ -4,8 +4,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        "0d3b66": "#0d3b66",
-        "f4d35e": "#f4d35e",
+        "main-blue": {
+          DEFAULT: "#165AA1", // Main color
+          "light": "#467EB9", // Lighter shade
+          "dark": "#2B4E73", // Darker shade
+        },
+        f4d35e: "#f4d35e",
       },
     },
   },
