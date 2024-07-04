@@ -6,10 +6,10 @@ export default {
       colors: {
         "main-bg": {
           DEFAULT: "#E94F37", // Main color
-          "light": "#F8725D", // Lighter shade
-          "dark": "#C1412D", // Darker shade
+          light: "#F8725D", // Lighter shade
+          dark: "#C1412D", // Darker shade
         },
-        "f6f7eb":"#f6f7eb",
+        f6f7eb: "#f6f7eb",
       },
     },
   },
