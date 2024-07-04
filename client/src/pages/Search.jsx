@@ -16,6 +16,7 @@ export default function Search() {
   });
   const [loading, setLoading] = useState(false);
   const [listings, setListings] = useState([]);
+  const [showMore, setShowMore] = useState(false);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -48,9 +49,15 @@ export default function Search() {
     }
     const fetchListings = async () => {
       setLoading(true);
+      setShowMore(false);
       const searchQuery = urlParams.toString();
       const res = await fetch(`/api/listing/get?${searchQuery}`);
       const data = await res.json();
+      if (data.length > 8) {
+        setShowMore(true);
+      } else {
+        setShowMore(false);
+      }
       setListings(data);
       setLoading(false);
     };
@@ -58,33 +65,17 @@ export default function Search() {
   }, [location.search]); // Corrected dependency array placement
 
   const handleChange = (e) => {
-    if (
-      e.target.id === "all" ||
-      e.target.id === "rent" ||
-      e.target.id === "sale"
-    ) {
-      setSidebarData({ ...sidebardata, type: e.target.id });
-    }
+    const { id, checked, value, type } = e.target;
 
-    if (e.target.id === "searchTerm") {
-      setSidebarData({ ...sidebardata, searchTerm: e.target.value });
-    }
-
-    if (
-      e.target.id === "parking" ||
-      e.target.id === "furnished" ||
-      e.target.id === "offer"
-    ) {
-      setSidebarData({
-        ...sidebardata,
-        [e.target.id]: e.target.checked === "true" ? true : false,
-      });
-    }
-
-    if (e.target.id === "sort_order") {
-      const sort = e.target.value.split("_")[0] || "created_at";
-      const order = e.target.value.split("_")[1] || "desc";
+    if (id === "searchTerm") {
+      setSidebarData({ ...sidebardata, searchTerm: value });
+    } else if (id === "sort_order") {
+      const [sort, order] = value.split("_");
       setSidebarData({ ...sidebardata, sort, order });
+    } else if (id === "parking" || id === "furnished" || id === "offer") {
+      setSidebarData({ ...sidebardata, [id]: checked });
+    } else {
+      setSidebarData({ ...sidebardata, type: id });
     }
   };
 
@@ -102,6 +93,19 @@ export default function Search() {
     navigate(`/search?${searchQuery}`);
   };
 
+  const onShowMoreClick = async () => {
+    const numOfListings = listings.length;
+    const startIndex = numOfListings;
+    const urlParams = new URLSearchParams(location.search);
+    urlParams.set("startIndex", startIndex);
+    const searchQuery = urlParams.toString();
+    const res = await fetch(`/api/listing/get?${searchQuery}`);
+    const data = await res.json();
+    if (data.length < 9) {
+      setShowMore(false);
+    }
+    setListings([...listings, ...data]);
+  };
   return (
     <div className="flex flex-col md:flex-row">
       <div className="p-7 border-b-2 md:border-r-2 md:min-h-screen">
@@ -225,6 +229,17 @@ export default function Search() {
             listings.map((listing) => (
               <ListingCard key={listing._id} listing={listing} />
             ))}
+
+          {showMore && (
+            <div className="w-full text-center">
+              <button
+                onClick={onShowMoreClick}
+                className="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800"
+              >
+                Show More
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
