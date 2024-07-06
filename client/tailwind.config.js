@@ -11,6 +11,9 @@ export default {
         },
         f6f7eb: "#f6f7eb",
       },
+      fontFamily: {
+        sans: ["Poppins", "sans-serif"], // Set Poppins as the default sans-serif font
+      },
     },
   },
   plugins: [],
