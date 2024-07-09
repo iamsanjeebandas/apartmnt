@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Link, useNavigate } from "react-router-dom";
 import "swiper/css/bundle";
 import SwiperCore from "swiper";
-import { Navigation } from "swiper/modules";
+import { Navigation, Autoplay } from "swiper/modules";
 import ListingCard from "../components/ListingCard.jsx";
+import Slider from "../components/Slider.jsx";
+
+SwiperCore.use([Autoplay, Navigation]);
 
 export default function Home() {
   const [offerListings, setOfferListings] = useState([]);
   const [saleListings, setSaleListings] = useState([]);
   const [rentListings, setRentListings] = useState([]);
-  SwiperCore.use([Navigation]);
-  console.log(saleListings);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  /*  SwiperCore.use([Navigation]); */
+
   useEffect(() => {
     const fetchOfferListings = async () => {
       try {
@@ -44,6 +48,10 @@ export default function Home() {
     };
     fetchOfferListings();
   }, []);
+
+  const handleClick = () => {
+    navigate("/search");
+  };
   return (
     <div>
       {/* Top side */}
@@ -57,30 +65,32 @@ export default function Home() {
           Find your dream home effortlessly with apartmnt. <br />
           Discover listings tailored to your needs and start your journey today.
         </div>
-        <Link
-          className="text-xs font-bold sm:text-sm text-blue-800 hover:underline"
-          to={"/search"}
-        >
-          Let's get started
-        </Link>
+        <div>
+          <button
+            className="text-white bg-blue-900 hover:bg-blue-950 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
+            onClick={handleClick}
+          >
+            Let's get started
+            <svg
+              className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 10"
+            >
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M1 5h12m0 0L9 1m4 4L9 9"
+              />
+            </svg>
+          </button>
+        </div>
       </div>
       {/* swiper */}
-      <Swiper navigation>
-        {offerListings &&
-          offerListings.length > 0 &&
-          offerListings.map((listing) => (
-            <SwiperSlide>
-              <div
-                style={{
-                  background: `url(${listing.imageUrls[0]}) center no-repeat`,
-                  backgroundSize: "cover",
-                }}
-                className="h-[500px]"
-                key={listing._id}
-              ></div>
-            </SwiperSlide>
-          ))}
-      </Swiper>
+      <Slider />
 
       {/* listings results for offer, sale and rent */}
       <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10">
