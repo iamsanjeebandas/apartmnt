@@ -1,4 +1,4 @@
-import { FaSearch } from "react-icons/fa";
+import { FaSearch, FaHome } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -25,10 +25,11 @@ export default function Header() {
   }, [location.search]);
   return (
     <header className="bg-main-bg shadow-md">
-      <div className="flex justify-between items-center max-w-7xl mx-auto p-3">
+      <div className="flex justify-between items-center mx-auto p-3">
         <Link to="/">
-          <h1 className="font-bold text-sm sm:text-xl flex flex-wrap">
-            <span className="text-f6f7eb">apartmnt</span>
+          <h1 className="font-bold text-sm sm:text-xl flex items-center">
+            <span className="mr-2 text-f6f7eb">apartmnt</span>
+            <FaHome className="text-f6f7eb" size={32} />
           </h1>
         </Link>
 
@@ -63,7 +64,7 @@ export default function Header() {
               <img
                 src={currentUser.avatar}
                 alt="profile"
-                className="rounded-full object-cover h-7 w-7"
+                className="rounded-full object-cover h-12 w-12"
               />
             ) : (
               <li className="text-f6f7eb hover:underline cursor-pointer">

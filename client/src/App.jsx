@@ -11,6 +11,7 @@ import CreateListing from "./pages/CreateListing.jsx";
 import UpdateListing from "./pages/UpdateListing.jsx";
 import Listing from "./pages/Listing.jsx";
 import Search from "./pages/Search.jsx";
+import UserListings from "./pages/UserListings .jsx";
 
 export default function App() {
   return (
@@ -30,6 +31,7 @@ export default function App() {
             path="/update-listing/:listingId"
             element={<UpdateListing />}
           />
+          <Route path="/user-listings" element={<UserListings />} />
         </Route>
       </Routes>
     </BrowserRouter>

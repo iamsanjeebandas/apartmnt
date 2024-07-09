@@ -48,10 +48,10 @@ export default function Home() {
     <div>
       {/* Top side */}
       <div className="flex flex-col gap-6 p-28 px-3 max-w-6xl mx-auto">
-        <h1 className="text-slate-700 text-3xl lg:text-6xl font-bold">
-          Your dream <span className="text-slate-500">home</span>
+        <h1 className="text-d2b68a text-3xl lg:text-6xl font-bold">
+          Your dream <span className="text-main-bg ">home</span>
           <br />
-          is just a click away.
+          is just a click away<span className="text-main-bg">.</span>
         </h1>
         <div className="text-gray-400 text-xs sm:text-xs">
           Find your dream home effortlessly with apartmnt. <br />
@@ -107,7 +107,7 @@ export default function Home() {
 
         {rentListings && rentListings.length > 0 && (
           <div className="">
-             <div className="my-3">
+            <div className="my-3">
               <h2 className="text-2xl font-semibold text-slate-600">
                 Recent places for rent
               </h2>
@@ -127,7 +127,7 @@ export default function Home() {
         )}
         {saleListings && saleListings.length > 0 && (
           <div className="">
-             <div className="my-3">
+            <div className="my-3">
               <h2 className="text-2xl font-semibold text-slate-600">
                 Recent places for sale
               </h2>

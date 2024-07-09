@@ -17,7 +17,11 @@ import {
   signOutUserStart,
 } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ClipLoader } from "react-spinners";
+import { BiListUl } from "react-icons/bi";
 export default function Profile() {
   const fileRef = useRef(null);
   const { currentUser, loading, error } = useSelector((state) => state.user);
@@ -29,6 +33,7 @@ export default function Profile() {
   const [showListingsError, setShowListingsError] = useState(false);
   const [userListings, setUserListings] = useState([]);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // firebase storage
   // allow read;
@@ -58,10 +63,33 @@ export default function Profile() {
       (error) => {
         setFileUploadError(true);
       },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) =>
-          setFormData({ ...formData, avatar: downloadURL })
-        );
+      async () => {
+        const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+        setFormData((prevData) => ({ ...prevData, avatar: downloadURL }));
+
+        // Automatically update the user profile with the new image
+        try {
+          dispatch(updateUserStart());
+          const res = await fetch(`/api/user/update/${currentUser._id}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ avatar: downloadURL }),
+          });
+          const data = await res.json();
+          if (data.success === false) {
+            dispatch(updateUserFailure(data.message));
+            toast.error(data.message);
+            return;
+          }
+          dispatch(updateUserSuccess(data));
+          toast.success("Profile image updated successfully!");
+          setFilePerc(0); // Reset upload progress after successful upload
+        } catch (error) {
+          dispatch(updateUserFailure(error.message));
+          toast.error(error.message);
+        }
       }
     );
   };
@@ -84,13 +112,15 @@ export default function Profile() {
       const data = await res.json();
       if (data.success === false) {
         dispatch(updateUserFailure(data.message));
+        toast.error(data.message);
         return;
       }
 
       dispatch(updateUserSuccess(data));
-      setUpdateSuccess(true);
+      toast.success("Profile updated successfully!");
     } catch (error) {
       dispatch(updateUserFailure(error.message));
+      toast.error(error.message);
     }
   };
 
@@ -126,20 +156,8 @@ export default function Profile() {
     }
   };
 
-  const handleShowListings = async () => {
-    try {
-      setShowListingsError(false);
-      const res = await fetch(`/api/user/listings/${currentUser._id}`);
-      const data = await res.json();
-      if (data.success === false) {
-        setShowListingsError(true);
-        return;
-      }
-
-      setUserListings(data);
-    } catch (error) {
-      setShowListingsError(true);
-    }
+  const handleShowListings = () => {
+    navigate("/user-listings");
   };
 
   const handleListingDelete = async (listingId) => {
@@ -162,6 +180,7 @@ export default function Profile() {
   };
   return (
     <div className="p-3 max-w-lg mx-auto">
+      <ToastContainer />
       <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
@@ -175,20 +194,16 @@ export default function Profile() {
           onClick={() => fileRef.current.click()}
           src={formData.avatar || currentUser.avatar}
           alt="profile"
-          className="rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2"
+          className="rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2 hover:scale-105 delay-150"
         />
         <p className="text-sm self-center">
           {fileUploadError ? (
             <span className="text-red-700">
-              Error Image upload (image must be less than 2 mb)
+              Error Image upload (image must be less than 2 MB)
             </span>
           ) : filePerc > 0 && filePerc < 100 ? (
             <span className="text-slate-700">{`Uploading ${filePerc}%`}</span>
-          ) : filePerc === 100 ? (
-            <span className="text-green-700">Image successfully uploaded!</span>
-          ) : (
-            ""
-          )}
+          ) : null}
         </p>
         <input
           type="text"
@@ -238,16 +253,22 @@ export default function Profile() {
         </span>
       </div>
 
-      <p className="text-red-700 mt-5">{error ? error : ""}</p>
+      {/* <p className="text-red-700 mt-5">{error ? error : ""}</p>
       <p className="text-green-700 mt-5">
         {updateSuccess ? "User is updated successfully!" : ""}
-      </p>
-      <button onClick={handleShowListings} className="text-green-700 w-full">
-        Show Listings
-      </button>
-      <p className="text-red-700 mt-5">
+      </p> */}
+      <div className="flex justify-center">
+        <button
+          onClick={handleShowListings}
+          className="flex items-center focus:outline-none text-white bg-[#FFBF00] hover:bg-[#E6AB00] focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
+        >
+          <BiListUl className="mr-2" size={20} />
+          View your Listings
+        </button>
+      </div>
+      {/* <p className="text-red-700 mt-5">
         {showListingsError ? "Error showing listings" : ""}
-      </p>
+      </p> */}
 
       {userListings && userListings.length > 0 && (
         <div className="flex flex-col gap-4">
