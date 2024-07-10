@@ -16,7 +16,6 @@ export default function UserListings() {
     try {
       const res = await fetch(`/api/user/listings/${currentUser._id}`);
       const data = await res.json();
-      console.log("Fetched Data:", data); // Check fetched data
       if (data.success === false) {
         console.error("Failed to fetch listings");
         return;
@@ -58,12 +57,12 @@ export default function UserListings() {
 
   return (
     <div className="bg-gray-100 min-h-screen py-8">
-      <div className="p-3 max-w-4xl mx-auto bg-main-bg-light rounded-lg shadow-md">
+      <div className="p-3 mx-auto lg:max-w-6xl max-w-lg bg-main-bg-light rounded-lg shadow-md">
         <h1 className="text-3xl font-semibold text-center p-3">
           Your Listings
         </h1>
 
-        <div className="mb-4 flex items-center justify-start">
+        <div className="mb-4 flex items-center justify-start px-3">
           <label
             htmlFor="filter"
             className="block text-lg font-medium text-gray-700 mr-4"
@@ -73,7 +72,7 @@ export default function UserListings() {
           <select
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
-            className="mt-1 block w-36 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+            className="block w-full sm:w-36 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
           >
             <option value="All">All</option>
             <option value="Sale">Sale</option>
@@ -82,8 +81,8 @@ export default function UserListings() {
         </div>
 
         {filteredListings.length > 0 ? (
-          <div className="overflow-x-auto">
-            <table className="min-w-full bg-white border border-gray-200 rounded-lg">
+          <div className="overflow-x-auto px-3">
+            <table className="w-full table-fixed bg-white border border-gray-200 rounded-lg">
               <thead className="bg-gray-100">
                 <tr>
                   <th className="py-3 px-6 text-left">Image</th>
@@ -99,7 +98,7 @@ export default function UserListings() {
                         <img
                           src={listing.imageUrls[0]}
                           alt="listing cover"
-                          className="h-16 w-16 object-cover rounded"
+                          className="h-16 w-16 sm:h-24 sm:w-24 object-cover rounded"
                         />
                       </Link>
                     </td>

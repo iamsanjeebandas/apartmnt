@@ -1,6 +1,7 @@
 .slider-container {
   max-width: 1250px; /* Adjust the maximum width as needed */
   margin: 0 auto;
+  padding: 0 16px; /* Add padding for small screens */
 }
 
 .slider {
@@ -15,4 +16,25 @@
   height: 100%;
   object-fit: cover; /* Ensure images cover the entire slide */
   border-radius: 12px; /* Rounded corners */
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .slider {
+    height: 360px; /* Adjust height for smaller screens */
+  }
+
+  .slide-image {
+    border-radius: 8px; /* Adjust border-radius for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .slider {
+    height: 280px; /* Adjust height for very small screens */
+  }
+
+  .slide-image {
+    border-radius: 5px; /* Adjust border-radius for very small screens */
+  }
 }
