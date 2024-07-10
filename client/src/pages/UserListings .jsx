@@ -57,8 +57,8 @@ export default function UserListings() {
 
   return (
     <div className="bg-gray-100 min-h-screen py-8">
-      <div className="p-3 mx-auto lg:max-w-6xl max-w-lg bg-main-bg-light rounded-lg shadow-md">
-        <h1 className="text-3xl font-semibold text-center p-3">
+      <div className="p-3 mx-auto md:max-w-6xl max-w-96 bg-main-bg-light rounded-lg shadow-md">
+        <h1 className="text-2xl md:text-3xl font-semibold text-center p-3">
           Your Listings
         </h1>
 

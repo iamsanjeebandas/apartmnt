@@ -260,7 +260,7 @@ export default function Profile() {
       <div className="flex justify-center">
         <button
           onClick={handleShowListings}
-          className="flex items-center focus:outline-none text-white bg-[#FFBF00] hover:bg-[#E6AB00] focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
+          className="flex items-center focus:outline-none text-white bg-[#FFBF00] hover:bg-[#E6AB00] focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm md:px-5 px-2 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
         >
           <BiListUl className="mr-2" size={20} />
           View your Listings
