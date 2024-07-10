@@ -179,9 +179,9 @@ export default function Profile() {
     }
   };
   return (
-    <div className="p-3 max-w-lg mx-auto">
+    <div className="px-3 sm:p-3 sm:max-w-lg max-w-xs mx-auto">
       <ToastContainer />
-      <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
+      <h1 className="text-3xl font-semibold text-center my-5">Profile</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
           onChange={(e) => setFile(e.target.files[0])}
@@ -257,7 +257,7 @@ export default function Profile() {
       <p className="text-green-700 mt-5">
         {updateSuccess ? "User is updated successfully!" : ""}
       </p> */}
-      <div className="flex justify-center">
+      <div className="flex justify-center my-5">
         <button
           onClick={handleShowListings}
           className="flex items-center focus:outline-none text-white bg-[#FFBF00] hover:bg-[#E6AB00] focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm md:px-5 px-2 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
@@ -271,7 +271,7 @@ export default function Profile() {
       </p> */}
 
       {userListings && userListings.length > 0 && (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 my-7">
           <h1 className="text-center mt-7 text-2xl font-semibold">
             Your Listings
           </h1>
