@@ -62,7 +62,7 @@ export default function Home() {
           is just a click away<span className="text-main-bg">.</span>
         </h1>
         <div className="text-gray-400 text-xs sm:text-xs">
-          Find your dream home effortlessly with apartmnt. <br />
+          Find your dream home effortlessly with FindApartmnt. <br />
           Discover listings tailored to your needs and start your journey today.
         </div>
         <div>
